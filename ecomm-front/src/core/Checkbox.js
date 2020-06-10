@@ -18,12 +18,11 @@ const Checkbox = ({ categories, handleFilters }) => {
     setChecked(newCheckedCategoryId);
     handleFilters(newCheckedCategoryId);
   };
-
   return categories.map((c, i) => (
     <li key={i} className='list-unstyled'>
       <input
-        value={checked.indexOf(c._id === -1)}
         onChange={handleToggle(c._id)}
+        value={checked.indexOf(c._id === -1)}
         type='checkbox'
         className='form-check-input'
       />
