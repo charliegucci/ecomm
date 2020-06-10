@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import Layout from './Layout';
-import { getProducts, getBraintreeClientToken } from './apiCore';
+import {
+  getProducts,
+  getBraintreeClientToken,
+  processPayment
+} from './apiCore';
+import { emptyCart } from './cartHelpers';
 import Card from './Card';
 import { isAuthenticated } from '../auth';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import DropIn from 'braintree-web-drop-in-react';
 
-const Checkout = ({ products }) => {
+const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
   const [data, setData] = useState({
+    loading: false,
     success: false,
     clientToken: null,
     error: '',
@@ -23,7 +29,7 @@ const Checkout = ({ products }) => {
       if (data.error) {
         setData({ ...data, error: data.error });
       } else {
-        setData({ ...data, clientToken: data.clientToken });
+        setData({ clientToken: data.clientToken });
       }
     });
   };
@@ -55,18 +61,23 @@ const Checkout = ({ products }) => {
     let getNonce = data.instance
       .requestPaymentMethod()
       .then((data) => {
-        console.log(data);
         nonce = data.nonce;
-        // once you have nonce (card type, card number) send nonce as 'paymentMethodNonce'
-        // and also total to be  charged
-        console.log(
-          'send nonce and total to process:',
-          nonce,
-          getTotal(products)
-        );
+        const paymentData = {
+          paymentMethodNonce: nonce,
+          amount: getTotal(products)
+        };
+
+        processPayment(userId, token, paymentData)
+          .then((response) => {
+            setData({ ...data, success: response.success });
+
+            emptyCart(() => {
+              setRun(!run);
+            });
+          })
+          .catch((error) => console.log(error));
       })
       .catch((error) => {
-        console.log('dropin error:', error);
         setData({ ...data, error: error.message });
       });
   };
@@ -97,9 +108,18 @@ const Checkout = ({ products }) => {
     </div>
   );
 
+  const showSuccess = (success) => (
+    <div
+      className='alert alert-info'
+      style={{ display: success ? '' : 'none' }}>
+      Thanks! Your Payment was successful.
+    </div>
+  );
+
   return (
     <div>
       <h2>Total: ${getTotal()}</h2>
+      {showSuccess(data.success)}
       {showError(data.error)}
       {showCheckout()}
     </div>
