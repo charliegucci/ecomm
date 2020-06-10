@@ -3,7 +3,8 @@ import Layout from './Layout';
 import {
   getProducts,
   getBraintreeClientToken,
-  processPayment
+  processPayment,
+  createOrder
 } from './apiCore';
 import { emptyCart } from './cartHelpers';
 import Card from './Card';
@@ -38,6 +39,10 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
     getToken(userId, token);
   }, []);
 
+  const handleAddress = (event) => {
+    setData({ ...data, address: event.target.value });
+  };
+
   const getTotal = () => {
     return products.reduce((currentValue, nextValue) => {
       return currentValue + nextValue.count * nextValue.price;
@@ -54,6 +59,8 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
     );
   };
 
+  let deliveryAddress = data.address;
+
   const buy = () => {
     setData({ loading: true });
 
@@ -69,11 +76,18 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
 
         processPayment(userId, token, paymentData)
           .then((response) => {
-            setData({ ...data, success: response.success });
+            const createOrderData = {
+              products: products,
+              transaction_id: response.transaction.id,
+              amount: response.transaction.amount,
+              address: deliveryAddress
+            };
 
-            emptyCart(() => {
-              setRun(!run);
-              setData({ loading: false });
+            createOrder(userId, token, createOrderData).then((response) => {
+              emptyCart(() => {
+                setData({ ...data, success: true, loading: false });
+                setRun(!run);
+              });
             });
           })
           .catch((error) => {
@@ -90,6 +104,15 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
     <div onBlur={() => setData({ ...data, error: '' })}>
       {data.clientToken !== null && products.length > 0 ? (
         <div>
+          <div className='form-group mb-3'>
+            <label className='text-muted'>Delivery Address:</label>
+            <textarea
+              onChange={handleAddress}
+              className='form-control'
+              value={data.address}
+              placeholder='Type your delivery address here...'></textarea>
+          </div>
+
           <DropIn
             options={{
               authorization: data.clientToken,
