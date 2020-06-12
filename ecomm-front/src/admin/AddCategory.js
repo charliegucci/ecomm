@@ -34,20 +34,22 @@ const AddCategory = () => {
   };
 
   const newCategoryForm = () => (
-    <form onSubmit={clickSubmit}>
-      <div className='form-group'>
-        <label className='text-muted'>Name</label>
-        <input
-          type='text'
-          className='form-control'
-          onChange={handleChange}
-          value={name}
-          autoFocus
-          required
-        />
-      </div>
-      <button className='btn btn-outline-primary'>Create Category</button>
-    </form>
+    <div className='container'>
+      <form onSubmit={clickSubmit}>
+        <div className='form-group'>
+          <label className='text-muted'>Name</label>
+          <input
+            type='text'
+            className='form-control'
+            onChange={handleChange}
+            value={name}
+            autoFocus
+            required
+          />
+        </div>
+        <button className='btn btn-outline-primary'>Create Category</button>
+      </form>
+    </div>
   );
 
   const showSucess = () => {

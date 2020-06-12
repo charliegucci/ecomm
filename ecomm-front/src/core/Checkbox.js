@@ -26,7 +26,7 @@ const Checkbox = ({ categories, handleFilters }) => {
         type='checkbox'
         className='form-check-input'
       />
-      <label className='form-check-label'>{c.name}</label>
+      <label>{c.name}</label>
     </li>
   ));
 };

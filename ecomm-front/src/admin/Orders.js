@@ -86,50 +86,54 @@ const Orders = () => {
 
   return (
     <Layout title='Orders' description={`G'day ${user.name}, Manage Orders`}>
-      <div className='row'>
-        <div className='col-md-6 offset-md-3'>
-          {showOrdersLength()}
-          {orders.map((o, oIndex) => {
-            return (
-              <div
-                key={oIndex}
-                style={{ borderBottom: '5px solid indigo' }}
-                className='mt-5'>
-                <h2 className='mb-5'>
-                  <span className='bg-primary'>Order ID: {o._id} </span>
-                </h2>
-                <ul className='list-group mb-2'>
-                  <li className='list-group-item'>{showStatus(o)}</li>
-                  <li className='list-group-item'>
-                    Transaction ID:{o.transaction_id}
-                  </li>
-                  <li className='list-group-item'>Amount: ${o.amount}</li>
-                  <li className='list-group-item'>Ordered by: {o.user.name}</li>
-                  <li className='list-group-item'>
-                    Ordered on: {moment(o.createdAt).fromNow()}
-                  </li>
-                  <li className='list-group-item'>
-                    Delivery Address: {o.address}
-                  </li>
-                </ul>
-                <h3 className='mt-4 mb-4 font-italic'>
-                  Total Product in the order: {o.products.length}
-                </h3>
+      <div className='container'>
+        <div className='row'>
+          <div className='col-md-6 offset-md-3'>
+            {showOrdersLength()}
+            {orders.map((o, oIndex) => {
+              return (
+                <div
+                  key={oIndex}
+                  style={{ borderBottom: '5px solid indigo' }}
+                  className='mt-5'>
+                  <h2 className='mb-5'>
+                    <span className='bg-primary'>Order ID: {o._id} </span>
+                  </h2>
+                  <ul className='list-group mb-2'>
+                    <li className='list-group-item'>{showStatus(o)}</li>
+                    <li className='list-group-item'>
+                      Transaction ID:{o.transaction_id}
+                    </li>
+                    <li className='list-group-item'>Amount: ${o.amount}</li>
+                    <li className='list-group-item'>
+                      Ordered by: {o.user.name}
+                    </li>
+                    <li className='list-group-item'>
+                      Ordered on: {moment(o.createdAt).fromNow()}
+                    </li>
+                    <li className='list-group-item'>
+                      Delivery Address: {o.address}
+                    </li>
+                  </ul>
+                  <h3 className='mt-4 mb-4 font-italic'>
+                    Total Product in the order: {o.products.length}
+                  </h3>
 
-                {o.products.map((p, pIndex) => (
-                  <div
-                    className='mb-4'
-                    key={pIndex}
-                    style={{ padding: '20px', border: '1px solid indigo' }}>
-                    {showInput('Product Name', p.name)}
-                    {showInput('Product Price', p.price)}
-                    {showInput('Product Total', p.count)}
-                    {showInput('Product Id', p._id)}
-                  </div>
-                ))}
-              </div>
-            );
-          })}
+                  {o.products.map((p, pIndex) => (
+                    <div
+                      className='mb-4'
+                      key={pIndex}
+                      style={{ padding: '20px', border: '1px solid indigo' }}>
+                      {showInput('Product Name', p.name)}
+                      {showInput('Product Price', p.price)}
+                      {showInput('Product Total', p.count)}
+                      {showInput('Product Id', p._id)}
+                    </div>
+                  ))}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </Layout>

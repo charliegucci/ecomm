@@ -57,10 +57,10 @@ const AdminDashboard = () => {
     <Layout
       title='Dashboard'
       description={`G'day ${name}!`}
-      className='container-fluid'>
+      className='container'>
       <div className='row'>
-        <div className='col-3'>{adminLinks()}</div>
-        <div className='col-9'>{adminInfo()}</div>
+        <div className=''>{adminLinks()}</div>
+        <div className='col-6'>{adminInfo()}</div>
       </div>
     </Layout>
   );
