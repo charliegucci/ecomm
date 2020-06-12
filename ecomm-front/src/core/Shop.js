@@ -109,7 +109,7 @@ const Shop = () => {
             />
           </ul>
           <h4>Filter by Price Range</h4>
-          <div>
+          <div className='container'>
             <Radiobox
               prices={prices}
               handleFilters={(filters) => handleFilters(filters, 'price')}
@@ -120,7 +120,7 @@ const Shop = () => {
           <h2 className='mb-4'>Products</h2>
           <div className='row'>
             {filteredResults.map((product, i) => (
-              <div key={i} className='col-3 mb-3'>
+              <div key={i} className='card-group'>
                 <Card product={product} />
               </div>
             ))}

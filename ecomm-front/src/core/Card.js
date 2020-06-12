@@ -104,26 +104,28 @@ const Card = ({
   };
 
   return (
-    <div className='card'>
-      <div className='card-header name'>{product.name}</div>
-      <div className='card-body'>
-        {shouldRedirect(redirect)}
-        <ShowImage item={product} url='product' />
-        <p className='lead mt-2'>{product.description.substring(0, 100)}</p>
-        <p className='black-10'>Php {product.price}</p>
-        <p className='black-9'>
-          Category: {product.category && product.category.name}
-        </p>
-        <p className='black-8'>
-          {/* Added on {moment(product.createdAt).fromNow()} */}
-        </p>
+    <div className='container'>
+      <div className='card'>
+        <div className='card-header name'>{product.name}</div>
+        <div className='card-body'>
+          {shouldRedirect(redirect)}
+          <ShowImage item={product} url='product' />
+          <p className='lead mt-2'>{product.description.substring(0, 100)}</p>
+          <p className='black-10'>Php {product.price}</p>
+          <p className='black-9'>
+            Category: {product.category && product.category.name}
+          </p>
+          <p className='black-8'>
+            {/* Added on {moment(product.createdAt).fromNow()} */}
+          </p>
 
-        {showStock(product.quantity)}
-        <br />
-        {showViewButton(showViewProductButton)}
-        {showAddToCart(showAddToCartButton)}
-        {showRemoveButton(showRemoveProductButton)}
-        {showCartUpdateOptions(cartUpdate)}
+          {showStock(product.quantity)}
+          <br />
+          {showViewButton(showViewProductButton)}
+          {showAddToCart(showAddToCartButton)}
+          {showRemoveButton(showRemoveProductButton)}
+          {showCartUpdateOptions(cartUpdate)}
+        </div>
       </div>
     </div>
   );
