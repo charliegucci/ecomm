@@ -100,6 +100,33 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
       });
   };
 
+  const cashOnDelivery = () => {
+    const dataCOD = {
+      amount: getTotal(products),
+      paymentMethodNonce: 'COD'
+    };
+    processPayment(userId, token, dataCOD)
+      .then((response) => {
+        const createOrderDataCOD = {
+          products: products,
+          address: deliveryAddress
+        };
+        createOrder(userId, token, createOrderDataCOD).then((response) => {
+          emptyCart(() => {
+            setData({ ...data, success: true, loading: false });
+            setRun(!run);
+          });
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        setData({ loading: false });
+      })
+      .catch((error) => {
+        setData({ ...data, error: error.message });
+      });
+  };
+
   const showDropIn = () => (
     <div onBlur={() => setData({ ...data, error: '' })}>
       {data.clientToken !== null && products.length > 0 ? (
@@ -122,9 +149,16 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
             }}
             onInstance={(instance) => (data.instance = instance)}
           />
-          <button onClick={buy} className='btn btn-success'>
-            Pay Now
-          </button>
+          <div className='mb-2'>
+            <button onClick={buy} className='btn btn-success'>
+              Pay Now
+            </button>
+          </div>
+          <div>
+            <button onClick={cashOnDelivery} className='btn btn-success'>
+              Pay On Delivery
+            </button>
+          </div>
         </div>
       ) : null}
     </div>
@@ -142,7 +176,7 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
     <div
       className='alert alert-info'
       style={{ display: success ? '' : 'none' }}>
-      Thanks! Your Payment was successful.
+      Thanks! Your Order was successful.
     </div>
   );
 
@@ -150,7 +184,7 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
 
   return (
     <div>
-      <h2>Total: ${getTotal()}</h2>
+      <h2>Total: Php {getTotal()}</h2>
       {showLoading(data.loading)}
       {showSuccess(data.success)}
       {showError(data.error)}

@@ -36,20 +36,22 @@ const Cart = () => {
   const noItemMessage = () => (
     <h2>
       Your Cart is empty. <br />
-      <Link to='/shop'>Continue Shopping</Link>
+      <button className='mt-4'>
+        <Link to='/shop'>Continue Shopping</Link>
+      </button>
     </h2>
   );
 
   return (
     <Layout
-      title='Shopping Cart'
-      description='Manage your cart items. Add remove Checkout or Continue Shopping'
+      title='TeaTa’s Cart Café'
+      description='Your next door quaint cafe that offers wide varieties of milk tea, frappe, chicken wings,fries,nachos and homemade desserts.'
       className='container-fluid'>
       <div className='row'>
-        <div className='col-6'>
+        <div className='col-md-4'>
           {items.length > 0 ? showItems(items) : noItemMessage()}
         </div>
-        <div className='col-6'>
+        <div className='col-md-6 offset-md-1'>
           <h2 className='mb-4'>Your Cart Summary</h2>
           <hr />
           <Checkout products={items} setRun={setRun} run={run} />

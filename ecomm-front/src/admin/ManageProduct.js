@@ -36,7 +36,7 @@ const ManageProducts = () => {
   return (
     <Layout
       title='Manage Product'
-      description='MERN ecomm App'
+      description={`G'day ${user.name}, You can update/delete Products here`}
       className='container-fluid'>
       <div className='row'>
         <div className='col-12'>
@@ -45,7 +45,7 @@ const ManageProducts = () => {
             {products.map((p, i) => (
               <li
                 key={i}
-                className='list-group-item d-flex justify-content-between align-items-center '>
+                className='list-group-item d-flex justify-content-between align-items-center ml-3 mr-3 '>
                 <strong>{p.name}</strong>
                 <Link to={`/admin/product/update/${p._id}`}>
                   <span className='badge badge-warning badge-pill'>Update</span>

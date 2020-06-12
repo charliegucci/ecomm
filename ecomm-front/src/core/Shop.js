@@ -96,11 +96,11 @@ const Shop = () => {
 
   return (
     <Layout
-      title='Shop Page'
-      description='MERN ecomm App'
+      title='TeaTa’s Cart Café'
+      description='Your next door quaint cafe that offers wide varieties of milk tea, frappe, chicken wings,fries,nachos and homemade desserts.'
       className='container-fluid'>
       <div className='row'>
-        <div className='col-4'>
+        <div className='col-3'>
           <h4>Filter by Categories</h4>
           <ul>
             <Checkbox
@@ -120,7 +120,7 @@ const Shop = () => {
           <h2 className='mb-4'>Products</h2>
           <div className='row'>
             {filteredResults.map((product, i) => (
-              <div key={i} className='col-4 mb-3'>
+              <div key={i} className='col-3 mb-3'>
                 <Card product={product} />
               </div>
             ))}

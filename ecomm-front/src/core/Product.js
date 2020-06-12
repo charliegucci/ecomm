@@ -39,12 +39,12 @@ const Product = (props) => {
       }
       className='container-fluid'>
       <div className='row'>
-        <div className='col-8'>
+        <div className='col-md-4 offset-md-1'>
           {product && product.description && (
             <Card product={product} showViewProductButton={false} />
           )}
         </div>
-        <div className='col-4'>
+        <div className='col-md-2 offset-md-4'>
           <h4>Related Products</h4>
           {relatedProduct.map((p, i) => (
             <div className='mb-3'>
