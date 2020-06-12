@@ -1,1 +1,1 @@
-export const API = 'https://teatascart.herokuapp.com';
+export const API = 'https://teatascart.herokuapp.com/api';
